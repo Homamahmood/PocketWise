@@ -51,6 +51,31 @@ app.post("/expenses", (req,res) =>{
 });
 })
 
+app.put("/expenses/:id",(req,res)=>{
+    const expenseId=Number(req.params.id);
+    const expense=expenses.find(expense=>expense.id===expenseId);
+    const title = req.body.title;
+    const amount = req.body.amount;
+    const category = req.body.category;
+    const date = req.body.date;
+    if (!expense) {
+    return res.status(404).json({
+        message: "Expense not found"
+    });
+} 
+    expense.title = title;
+    expense.amount = amount;
+    expense.category = category;
+    expense.date = date;
+
+    return res.status(200).json({
+         message: "Expense updated successfully",
+         expense
+
+   
+}); 
+})
+
 app.listen(PORT, () =>{
     console.log(`Server running on port ${PORT}`);
 });
