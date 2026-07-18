@@ -71,9 +71,27 @@ app.put("/expenses/:id",(req,res)=>{
     return res.status(200).json({
          message: "Expense updated successfully",
          expense
+         
 
    
 }); 
+})
+
+app.delete("/expenses/:id",(req,res) =>{
+    const expenseId=Number(req.params.id);
+    const index=expenses.findIndex(expense => expense.id === expenseId);
+    if(index===-1){
+        return res.status(404).json({
+            message:"Expense not found"
+        });
+    }
+    expenses.splice(index,1);
+    return res.status(200).json({
+        message:"Expense Deleted Successfully",
+        
+
+    });
+    
 })
 
 app.listen(PORT, () =>{
